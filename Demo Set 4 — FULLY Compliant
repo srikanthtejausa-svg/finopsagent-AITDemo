@@ -1,0 +1,41 @@
+resource "aws_db_instance" "qa_db" {
+  engine         = "postgres"
+  instance_class = "db.t4g.medium"
+  allocated_storage = 100
+
+  tags = {
+    Environment = "qa"
+    CostCenter  = "engineering"
+    Owner       = "platform-team@techcorp.com"
+    Project     = "customer-portal"
+  }
+}
+
+resource "aws_s3_bucket" "data_bucket" {
+  bucket = "techcorp-qa-data"
+
+  lifecycle_rule {
+    enabled = true
+
+    transition {
+      days          = 90
+      storage_class = "STANDARD_IA"
+    }
+
+    transition {
+      days          = 180
+      storage_class = "GLACIER"
+    }
+
+    expiration {
+      days = 365
+    }
+  }
+
+  tags = {
+    Environment = "qa"
+    CostCenter  = "engineering"
+    Owner       = "platform-team@techcorp.com"
+    Project     = "customer-portal"
+  }
+}
