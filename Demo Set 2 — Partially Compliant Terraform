@@ -1,0 +1,29 @@
+resource "aws_instance" "qa_app" {
+  ami           = "ami-0abcdef1234567890"
+  instance_type = "t3.medium"
+
+  root_block_device {
+    volume_size = 100
+    volume_type = "gp3"
+  }
+
+  tags = {
+    Environment = "qa"
+    CostCenter  = "engineering"
+    Owner       = "platform-team@techcorp.com"
+    Project     = "customer-portal"
+  }
+}
+
+resource "aws_db_instance" "qa_db" {
+  engine         = "postgres"
+  instance_class = "db.t3.large"
+  allocated_storage = 100
+
+  tags = {
+    Environment = "qa"
+    CostCenter  = "engineering"
+    Owner       = "platform-team@techcorp.com"
+    Project     = "customer-portal"
+  }
+}
