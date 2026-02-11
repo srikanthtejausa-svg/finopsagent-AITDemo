@@ -1,0 +1,10 @@
+resource "aws_s3_bucket" "logs" {
+  bucket = "techcorp-qa-logs"
+
+  tags = {
+    Environment = "qa"
+    CostCenter  = "operations"
+    Owner       = "ops-team@techcorp.com"
+    Project     = "logging"
+  }
+}
